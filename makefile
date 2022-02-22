@@ -27,5 +27,10 @@ postgres:
 	echo "Starting postgres..."
 	docker run -d --name pg -p 5432:5432 -e POSTGRES_PASSWORD=ramo -e POSTGRES_USER=omar postgres:14-alpine
 	echo "Postgres started"
+
+sqlc:
+	echo "Starting sqlc..."
+	sqlc generate
+	echo "Sqlc started"
 	
-.PHONY: createdb dropdb migrateup migratedown postgres
+.PHONY: createdb dropdb migrateup migratedown postgres sqlc
