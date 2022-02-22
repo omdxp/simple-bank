@@ -32,5 +32,10 @@ sqlc:
 	echo "Starting sqlc..."
 	sqlc generate
 	echo "Sqlc started"
+
+test:
+	echo "Running tests..."
+	go test -v -cover ./...
+	echo "Tests run"
 	
-.PHONY: createdb dropdb migrateup migratedown postgres sqlc
+.PHONY: createdb dropdb migrateup migratedown postgres sqlc test
