@@ -67,7 +67,7 @@ func TestDeleteEntry(t *testing.T) {
 	err := testQueries.DeleteEntry(context.Background(), entry1.ID)
 	require.NoError(t, err)
 
-	entry2, err := testQueries.GetEntry(context.Background(), entry1.AccountID)
+	entry2, err := testQueries.GetEntry(context.Background(), entry1.ID)
 	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, entry2)
