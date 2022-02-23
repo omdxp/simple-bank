@@ -37,5 +37,10 @@ test:
 	echo "Running tests..."
 	go test -v -cover ./...
 	echo "Tests run"
+
+server:
+	echo "Starting server..."
+	go run main.go
+	echo "Server started"
 	
-.PHONY: createdb dropdb migrateup migratedown postgres sqlc test
+.PHONY: createdb dropdb migrateup migratedown postgres sqlc test server
