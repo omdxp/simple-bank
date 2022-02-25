@@ -42,5 +42,10 @@ server:
 	echo "Starting server..."
 	go run main.go
 	echo "Server started"
+
+mock:
+	echo "Starting mock db..."
+	mockgen -package mockdb -destination db/mock/store.go github.com/Omar-Belghaouti/simple-bank/db/sqlc Store
+	echo "Mock db started"
 	
-.PHONY: createdb dropdb migrateup migratedown postgres sqlc test server
+.PHONY: createdb dropdb migrateup migratedown postgres sqlc test server mock
