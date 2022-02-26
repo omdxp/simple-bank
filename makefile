@@ -1,6 +1,6 @@
 create_migration:
 	echo "Creating migration..."
-	migrate create -ext sql -dir db/migration -seq init_schema
+	migrate create -ext sql -dir db/migration -seq $(ARGS)
 	echo "Migration created"
 
 migrateup:
@@ -8,9 +8,19 @@ migrateup:
 	migrate -path db/migration -database "postgres://omar:ramo@localhost:5432/simple_bank?sslmode=disable" -verbose up
 	echo "Migrations run"
 
+migrateup1:
+	echo "Running migrations..."
+	migrate -path db/migration -database "postgres://omar:ramo@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+	echo "Migrations run"
+
 migratedown:
 	echo "Rolling back migrations..."
 	migrate -path db/migration -database "postgres://omar:ramo@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	echo "Migrations rolled back"
+
+migratedown1:
+	echo "Rolling back migrations..."
+	migrate -path db/migration -database "postgres://omar:ramo@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 	echo "Migrations rolled back"
 
 createdb:
@@ -48,4 +58,4 @@ mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/Omar-Belghaouti/simple-bank/db/sqlc Store
 	echo "Mock db started"
 	
-.PHONY: createdb dropdb migrateup migratedown postgres sqlc test server mock
+.PHONY: createdb dropdb migrateup migrateup1 migratedown migratedown1 postgres sqlc test server mock
