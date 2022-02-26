@@ -153,11 +153,11 @@ func TestCreateTransferAPI(t *testing.T) {
 			buildStubs: func(store *mockdb.MockStore) {
 				account2.Currency = util.EUR
 				store.EXPECT().GetAccount(gomock.Any(), gomock.Any()).Times(1).Return(account1, nil)
-				store.EXPECT().GetAccount(gomock.Any(), gomock.Any()).Times(2).Return(account2, nil)
+				store.EXPECT().GetAccount(gomock.Any(), gomock.Any()).Times(1).Return(account2, nil)
 				store.EXPECT().TransferTx(gomock.Any(), gomock.Any()).Times(0)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
-				require.Equal(t, http.StatusInternalServerError, recorder.Code)
+				require.Equal(t, http.StatusBadRequest, recorder.Code)
 			},
 		},
 	}
