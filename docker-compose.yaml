@@ -1,0 +1,30 @@
+version: '3.0'
+services:
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: omar
+      POSTGRES_PASSWORD: ramo
+      POSTGRES_DB: simple_bank
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: always
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_SOURCE: postgres://omar:ramo@postgres:5432/simple_bank?sslmode=disable
+      GIN_MODE: release
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/api:/var/www/html
+    restart: always
+    depends_on:
+      - postgres
+    entrypoint: ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]
+    command: ["/app/main"]
